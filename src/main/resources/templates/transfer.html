@@ -12,10 +12,10 @@
 <div layout:fragment="loginContent">
     <form name="login" th:action="@{/transferMoney}" method="post" class="form-signin" style="width: 50%; margin: auto; margin-top: 20px; text-align: center;">
         <h2 class="form-signin-heading">Utalás</h2>
-        <label for="toEmail" class="sr-only">Utalni kívánt személy email címe</label>
-        <input type="text" id="toEmail" name="toEmail" class="form-control" placeholder="Email cím" required="true" style="width: 40%; margin: auto;"/>
+        <label for="toUserEmail" class="sr-only">Kinek utalod az összeget?</label>
+        <input type="text" id="toUserEmail" name="toUserEmail" class="form-control" placeholder="Email cím" required="true" style="width: 40%; margin: auto;"/>
         <label for="amount" class="sr-only">Utalni kívánt összeg</label>
-        <input type="number" id="amount" name="amount" class="form-control" placeholder="Utalni kívánt összeg" required="true" style="width: 40%; margin: auto;"/>
+        <input type="number" id="amount" name="amount" class="form-control" placeholder="Utalni kívánt összeg (Ft)" required="true" style="width: 40%; margin: auto;"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Utalás megerősítése</button>
     </form>
 </div>

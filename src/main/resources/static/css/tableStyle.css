@@ -1,0 +1,25 @@
+.table table-dark th {
+    cursor: pointer;
+}
+
+#dateOfTrans:hover {
+    cursor: pointer;
+}
+
+.table table-dark .th-sort-asc::after {
+    content: "\25b4";
+}
+
+.table table-dark .th-sort-desc::after {
+    content: "\25be";
+}
+
+.table table-dark .th-sort-asc::after,
+.table table-dark .th-sort-desc::after {
+    margin-left: 5px;
+}
+
+.table table-dark .th-sort-asc,
+.table table-dark .th-sort-desc {
+    background: rgba(0, 0, 0, 0.1);
+}
