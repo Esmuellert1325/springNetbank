@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/books.css"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Netbank</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" sec:authorize="hasAnyAuthority('ROLE_USER')">
+                    <a class="nav-link" href="/index">Egyenleg</a>
+                </li>
+                <li class="nav-item active" sec:authorize="hasAnyAuthority('ROLE_USER')">
+                    <a class="nav-link" href="/transactions">Tranzakciók</a>
+                </li>
+                <li class="nav-item active" sec:authorize="hasAnyAuthority('ROLE_USER')">
+                    <a class="nav-link" href="/transfer">Utalás</a>
+                </li>
+                <li class="nav-item active" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>
+            </ul>
+            <div class="navbar-text navbar-right" style="margin-left: 50%;">
+                <span sec:authorize="isAuthenticated()">Üdvözlünk </span><span sec:authorize="isAuthenticated()" sec:authentication="name">oldalunkon!</span>
+                <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
+                    | <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Kijelentkezés</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div layout:fragment="loginContent">
+
+    </div>
+</body>
+</html>
