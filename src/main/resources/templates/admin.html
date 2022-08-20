@@ -6,11 +6,16 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Admin oldal</title>
+    <title>Netbank - Admin oldal</title>
 </head>
 <body>
 <div layout:fragment="loginContent">
-    <h1>Admin</h1>
+    <h1>Keresés a felhasználók között</h1>
+    <form th:action="@{/searchForUser}" method="post" th:object="${user}">
+        <label for="email"></label>
+        <input type="text" name="email" id="email" required>
+        <button type="submit">Keresés</button>
+    </form>
 </div>
 </body>
 </html>

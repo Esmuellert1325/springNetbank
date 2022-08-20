@@ -14,11 +14,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    @Query(nativeQuery = true, value = "select * from users where users.email = :email")
-    User getUserDetails(@Param("email") String email);
+    @Query(nativeQuery = true, value = "select * from users where users.email = :emailOrId or users.id = :emailOrId")
+    User getUserDetails(@Param("emailOrId") String emailOrId);
 
-    @Query(nativeQuery = true, value = "select users.id from users where users.email = :email")
-    Long getUserIdByEmail(@Param("email") String email);
+    @Query(nativeQuery = true, value = "select users.id from users where users.email = :emailOrNum or account_number = :emailOrNum")
+    Long getUserIdByEmailOrNumber(@Param("emailOrNum") String emailOrNum);
 
     @Query(nativeQuery = true, value = "select email from users")
     List<String> getAllUserEmails();
@@ -32,4 +32,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query(nativeQuery = true, value = "update users set balance = balance + :amount where users.email = :email")
     void addMoneyByEmail(@Param("amount") Integer amount, @Param("email") String email);
+
+    //TODO: Fix this! Transactions
+    @Query(nativeQuery = true, value = "select * from transactions where email = :emailOrNumber or account_number = :emailOrNumber")
+    User searchUser(@Param("emailOrNumber") String emailOrNumber);
 }

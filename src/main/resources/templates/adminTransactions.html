@@ -30,10 +30,11 @@
                 <td th:text="${trans.transactionDate}">Dátum</td>
                 <td th:text="${trans.amount} + Ft">Összeg</td>
                 <td>
-                    <form th:action="@{/deleteUserTrans}" method="post">
+                    <form th:action="@{/adminDeleteTrans}" method="post">
                         <input type="number" hidden th:value="${trans.id}" id="id" name="id">
                         <input type="number" hidden th:value="${trans.amount}" id="amount" name="amount">
                         <input type="text" hidden th:value="${trans.toUserEmail}" id="toUserEmail" name="toUserEmail">
+                        <input type="number" hidden th:value="${trans.userId}" id="userId" name="userId">
                         <button class="btn btn-danger" type="submit" id="deleteUserTrans">X</button>
                     </form>
                 </td>

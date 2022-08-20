@@ -1,19 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
     let emailOfUser = document.getElementById('emailOfUser').textContent;
+    console.log(emailOfUser);
 
-    let trs = document.querySelectorAll('tr');
+    if (emailOfUser != "ADMIN") {
+        let trs = document.querySelectorAll('tr');
 
-    trs.forEach(tr => {
-        let email = tr.firstElementChild.textContent;
-        let parent = tr.parentElement;
+        trs.forEach(tr => {
+            let email = tr.firstElementChild.textContent;
+            let parent = tr.parentElement;
+            let form = tr.lastElementChild.firstElementChild;
+            let oldDate = new Date(tr.firstElementChild.nextElementSibling.textContent);
+            let currentDate = new Date();
 
-        if (parent.tagName == 'TBODY' && email == emailOfUser) {
-            tr.style.color = 'green';
-        }
-        else if (parent.tagName == 'TBODY' && email != emailOfUser) {
-            tr.style.color = 'red';
-        }
-    });
+            const msBetweenDates = Math.abs(oldDate.getTime() - currentDate.getTime());
+            const daysBetweenDates = msBetweenDates / (24 * 60 * 60 * 1000);
+
+            if (oldDate !== 'Mikor' && daysBetweenDates >= 7) {
+                form.style.display = 'none';
+            }
+
+            if (parent.tagName == 'TBODY' && email == emailOfUser) {
+                tr.style.color = 'green';
+                form.style.display = 'none';
+            }
+            else if (parent.tagName == 'TBODY' && email != emailOfUser) {
+                tr.style.color = 'red';
+            }
+        });
+    }
 
     function sortTableByColumn(table, column, asc = true) {
         const dirModifier = asc ? 1 : -1;

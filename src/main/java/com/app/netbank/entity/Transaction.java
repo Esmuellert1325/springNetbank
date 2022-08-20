@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "transactions")
@@ -28,12 +27,11 @@ public class Transaction {
     @Column(nullable = false)
     private String toUserEmail;
 
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     @Column(nullable = false)
     private Date transactionDate;
 
     @Column(nullable = false)
     private Integer amount;
 
-//    @ManyToMany(mappedBy = "transactions")
-//    private Set<User> users = new HashSet<User>();
 }

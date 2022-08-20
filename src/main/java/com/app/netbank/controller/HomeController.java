@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -56,6 +57,20 @@ public class HomeController {
         return "transactions";
     }
 
+    @PostMapping("/deleteUserTrans")
+    public String deleteUserTrans(@ModelAttribute Transaction trans) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        transactionRepo.removeTransactionById(trans.getId());
+
+        Integer money = trans.getAmount();
+        String email = auth.getName();
+        userRepository.addMoneyByEmail(money, email);
+
+        String toEmail = trans.getToUserEmail();
+        userRepository.subtractMoneyByEmail(money, toEmail);
+        return "/transactionMessages/transCancel";
+    }
+
     // Pénz utalása
     @GetMapping("transfer")
     public String transfer() {
@@ -66,7 +81,7 @@ public class HomeController {
     public String transferMoney(@ModelAttribute Transaction trans) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         trans.setTransactionDate(new Date());
-        trans.setUserId(userRepository.getUserIdByEmail(auth.getName()));
+        trans.setUserId(userRepository.getUserIdByEmailOrNumber(auth.getName()));
 
         List<String> allEmails = userRepository.getAllUserEmails();
         User user = userRepository.getUserDetails(auth.getName());
@@ -88,4 +103,36 @@ public class HomeController {
     public String admin() {
         return "admin";
     }
+
+    @PostMapping("/searchForUser")
+    public String searchForUser(@ModelAttribute User user, Model model) {
+        String emailOrNumber = user.getEmail(); // Nem biztos, hogy email-re keres az admin
+
+        Long userId = userRepository.getUserIdByEmailOrNumber(emailOrNumber);
+
+        if (userId != null) {
+            String userEmail = userRepository.getUserDetails(userId.toString()).getEmail();
+            List<Transaction> userTransactions = transactionRepo.getAllTransactionsByUserId(userId, userEmail);
+            model.addAttribute("allTransactions", userTransactions);
+            model.addAttribute("userName", "ADMIN");
+
+            //TODO: Complete admin transactions
+            return "adminTransactions";
+        }
+
+        return "userNotFound";
+    }
+
+    @PostMapping("/adminDeleteTrans")
+    public String adminDeleteTrans(@ModelAttribute Transaction trans, Model model) {
+        transactionRepo.removeTransactionById(trans.getId());
+
+        User sender = userRepository.getUserDetails(trans.getUserId().toString());
+        userRepository.subtractMoneyByEmail(trans.getAmount(), trans.getToUserEmail());
+        userRepository.addMoneyByEmail(trans.getAmount(), sender.getEmail());
+        model.addAttribute("name", "ADMIN");
+
+        return "/transactionMessages/transCancel";
+    }
+
 }

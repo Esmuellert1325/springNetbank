@@ -24,4 +24,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     @Query(nativeQuery = true, value = "select * from transactions where user_id = :userId or to_user_email = :toUserEmail")
     List<Transaction> getAllTransactionsByUserId(@Param("userId") Long userId, @Param("toUserEmail") String toUserEmail);
+
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "delete from transactions where id = :transId")
+    void removeTransactionById(@Param("transId") Long transId);
 }
