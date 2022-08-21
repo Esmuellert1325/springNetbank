@@ -15,7 +15,7 @@ Admin jogok:
 
 User jogok:
 -Bejelentkezés után a főoldalra kerül, ahol látja, hogy mekkora összeg áll rendelkezésre a számláján
--Van egy tranzakció fül a navigációs sávon, ami kilistázza az általa utalt és neki utalt tranzakciókat
+-Van egy tranzakció fül a navigációs sávon, ami kilistázza az általa utalt és neki utalt tranzakciókat (amit ő utalt az piros színű, amit neki utaltak az zöld színű sor)
 -Ezen tranzakciók közül csak azokat törölheti amiket ő utalt és amik nem régebbiek 7 napnál, tranzakció törlésekor ugyanaz történik, mint az adminnál (szúrtam be egy példát is)
 -Az utalás fülre kattintva megadhatunk egy email-t és egy összeget, így utalhatunk a rendszerben tárolt többi usernek
 -Ha nem található email-t vagy az összeg nagyobb, mint amekkora a számláján van, akkor hibát dob az alkalmazás (negatív számok is le vannak kezelve)
