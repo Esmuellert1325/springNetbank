@@ -87,12 +87,13 @@ public class HomeController {
         List<String> allEmails = userRepository.getAllUserEmails();
         User user = userRepository.getUserDetails(auth.getName());
         Integer currentBalance = user.getBalance();
+        Integer transferAmount = Math.abs(trans.getAmount());
 
-        if (allEmails.contains(trans.getToUserEmail()) && currentBalance >= trans.getAmount() && !trans.getToUserEmail().equals(auth.getName())) {
-            transactionRepo.insertTransaction(trans.getAmount(), trans.getToUserEmail(), trans.getTransactionDate(), trans.getUserId());
+        if (allEmails.contains(trans.getToUserEmail()) && currentBalance >= transferAmount && !trans.getToUserEmail().equals(auth.getName())) {
+            transactionRepo.insertTransaction(transferAmount, trans.getToUserEmail(), trans.getTransactionDate(), trans.getUserId());
 
-            userRepository.subtractMoneyByEmail(trans.getAmount(), auth.getName());
-            userRepository.addMoneyByEmail(trans.getAmount(), trans.getToUserEmail());
+            userRepository.subtractMoneyByEmail(transferAmount, auth.getName());
+            userRepository.addMoneyByEmail(transferAmount, trans.getToUserEmail());
             return "/transactionMessages/transSuccess";
         }
 
